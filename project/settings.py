@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'products',
     'taggit',
     'django_summernote',
+    'settings',
 
 ]
 
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,7 +125,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 MEDIA_URL = '/meadia/'
-MEDIA_ROOT = BASE_DIR / "meadia" 
+MEDIA_ROOT = BASE_DIR / "meadia"
 
 
 # Default primary key field type
