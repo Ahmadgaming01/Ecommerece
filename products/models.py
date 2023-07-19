@@ -38,6 +38,7 @@ class ProductImages(models.Model):
     image = models.ImageField(_('images'), upload_to='products_images')
     def __str__(self):
         return str(self.product)   
+    
 class Brand (models.Model):
     name = models.CharField ( _('name'),max_length=150)
     image = models.ImageField (_('image'),upload_to="brand")
