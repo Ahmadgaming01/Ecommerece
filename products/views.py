@@ -1,11 +1,32 @@
 from django.shortcuts import render ,redirect
 from django.views import generic
 from.models import Product , ProductImages ,Brand ,Review
-# Create your views here.
+from django.db.models import Q
 
 
 def post_list_debug (request):
-    data = Product.objects.all()
+    #data = Product.objects.filter(price=20)
+    #data = Product.objects.filter(price__gt=80)
+    #data = Product.objects.filter(price_lt=20)
+    #data = Product.objects.filter(price__lte=80)
+    #data = Product.objects.filter(price__range=(20,25))
+    #data = Product.objects.filter(brand__id__gt=30)
+    #data = Product.objects.filter(name__contains='snyder')
+    #data = Product.objects.filter(name__startswith='logon')
+    #data = Product.objects.filter(name__endwith='snyder')
+    #data = Product.objects.filter(video__isnull=True)
+    #data = Review.objects.filter(create_date_year=2023)
+    #data = Review.objects.filter(create_date_month=7)
+    #data = Product.objects.filter(price__gt=50, flag='Sale')
+    #data = Product.objects.filter(price__gt = 20).filter(flag='Sale')\
+    data = Product.objects.filter(
+        Q(price__gt=50),
+        Q(flag = 'Sale')
+        
+
+    )
+
+
     return render(request , 'products/debug.html',{'data':data})
 
 
