@@ -8,8 +8,7 @@
 </head>
 <body>
     
-</body>
-</html>
+
 
 
 <h1>psots</h1>
@@ -18,7 +17,13 @@
 
 
 <ul>
-    {% for post in data %}
-        <li>{{post.price}} - {{post.flag}} </li>
-    {% endfor %}
+
+
+
+{% for post in data %}
+<li>  {{post.name}} - {{post.brand}} </li>
+{% endfor %}
+
 </ul>
+</body>
+</html>
