@@ -61,6 +61,11 @@ class ProductDetail (generic.DetailView):
 class BrandList(generic.ListView):
     model = Brand
     paginate_by = 50
+    
+    def get_queryset(self):
+        object_list  = Brand.objects.annotate(posts_count = Count('Product_Brand'))
+        return object_list
+    
 
 class BrandDetail(generic.ListView):
     model = Product
@@ -74,6 +79,8 @@ class BrandDetail(generic.ListView):
         context = super().get_context_data(**kwargs)
         context["brand"] = Brand.objects.get(slug = self.kwargs['slug'])
         return context
+    
+
     
 class DeleteProduct(generic.DeleteView):
     model = Product
