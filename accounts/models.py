@@ -8,7 +8,7 @@ class Profile (models.Model):
     user = models.ForeignKey(User , related_name= 'User_Profile' , on_delete= models.CASCADE)
     image = models.ImageField(upload_to='accounts')
     def __str__(self):
-        return str(self.name)
+        return str(self.user)
     
 
 PHONE_CHOICES = [
@@ -22,7 +22,7 @@ class Phones (models.Model):
     type = models.CharField(max_length=10 , choices=PHONE_CHOICES)
     phone = models.CharField(max_length=25)
     def __str__(self):
-        return str(self.name)
+        return str(self.user)
 
 ADRESS_CHOICES = [
     ('Home','Home'),
@@ -38,4 +38,4 @@ class Adress(models.Model):
     type = models.TextField(max_length=150 , choices= ADRESS_CHOICES)
 
     def __str__(self):
-        return str(self.name)
+        return str(self.user)
