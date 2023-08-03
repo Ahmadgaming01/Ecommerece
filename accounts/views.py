@@ -3,4 +3,10 @@ from .forms import SignupForm , ActivateUser
 from .models import Profile , Phones , Adress
 # Create your views here.
 def signup(request):
-    pass
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form=SignupForm()
+    return render(request , 'registration/signup.html',{'form':form})
