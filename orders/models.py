@@ -39,6 +39,12 @@ class Cart(models.Model):
     user = models.ForeignKey(User,related_name='cart_user', on_delete=models.SET_NULL , null=True ,blank=True)
     completed = models.BooleanField(default=False)
 
+    def cart_total (self):
+        total = 0
+        for product in self.cart_detail.all():
+            total += product.total
+        return total
+
 class CartDetail(models.Model):
     cart = models.ForeignKey(Cart , related_name='cart_detail',on_delete=models.CASCADE)
     product = models.ForeignKey(Product , related_name='cart_product',on_delete= models.CASCADE)

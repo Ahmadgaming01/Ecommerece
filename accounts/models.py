@@ -19,7 +19,7 @@ PHONE_CHOICES = [
 ]
 
 class Phones (models.Model):
-    user = models.ForeignKey(User , related_name= 'User_Phones' , on_delete= models.CASCADE)
+    user = models.ForeignKey(User , related_name= 'user_phones' , on_delete= models.CASCADE)
     type = models.CharField(max_length=10 , choices=PHONE_CHOICES)
     phone = models.CharField(max_length=25)
     def __str__(self):
@@ -35,7 +35,7 @@ ADRESS_CHOICES = [
     
 
 class Adress(models.Model):
-    user = models.ForeignKey(User , related_name= 'User_Adress' , on_delete= models.CASCADE)
+    user = models.ForeignKey(User , related_name= 'user_adress' , on_delete= models.CASCADE)
     type = models.TextField(max_length=150 , choices= ADRESS_CHOICES)
 
     def __str__(self):
