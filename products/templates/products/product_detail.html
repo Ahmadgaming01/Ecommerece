@@ -43,9 +43,9 @@
                     </div>
                     <ul class="details-preview">
 
-                        {% for image in object.product_images.all %}
-                        <li><img src="{{image.image.url}}" alt="product"></li>
-                        {% endfor %}
+                        
+                        <li><img src="{{object.image.url}}" alt="product"></li>
+                        
                     </ul>
                     <ul class="details-thumb">
                         {% for image in object.product_images.all %}
@@ -91,7 +91,7 @@
                         </ul>
                     </div>
                     <div class="details-add-group row">
-                        <form action="post">
+                        <form action="/orders/add-to-cart" method="post">
                             {% csrf_token %}
                             <div class="col-lg-6">
                                 <input  title="Quantity Number" type="text" name="quantity" value="1">
