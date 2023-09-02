@@ -18,7 +18,7 @@ def add_to_cart (request):
     cart_detail , created = CartDetail.objects.get_or_create (cart=cart , product=product)
     cart_detail.quantity = quantity
     cart_detail.price = product.price
-    cart_detail.total = int(quantity) * product.price
+    cart_detail.total = round (int(quantity) * product.price , 2)
     cart_detail.save()
 
     return redirect(f'/product/{product.slug}')

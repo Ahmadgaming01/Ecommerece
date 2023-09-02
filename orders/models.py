@@ -43,14 +43,14 @@ class Cart(models.Model):
         total = 0
         for product in self.cart_detail.all():
             total += product.total
-        return total
+        return round (total , 2)
 
 class CartDetail(models.Model):
     cart = models.ForeignKey(Cart , related_name='cart_detail',on_delete=models.CASCADE)
     product = models.ForeignKey(Product , related_name='cart_product',on_delete= models.CASCADE)
     price = models.FloatField
     quantity = models.IntegerField(default=1)
-    total = models.FloatField(default=0)
+    total = models.FloatField (default=0)
 
 class Copon(models.Model):
     code = models.CharField(max_length=25)
