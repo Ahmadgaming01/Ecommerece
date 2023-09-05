@@ -7,6 +7,12 @@ from products.models import Product
 class OderList(ListView):
     model = Order
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user)
+        return queryset
+    
+
 def add_to_cart (request):
     product = Product.objects.get(id=request.POST['product_id'])
     quantity = request.POST['quantity']
