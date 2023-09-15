@@ -25,7 +25,7 @@ class ProductListApi(generics.ListAPIView):
     queryset = Product.objects.all() 
     serializer_class = ProductSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ProductFilter
+    filterset_class = ProductFilter
 #    filter_backends = [filters.SearchFilter]
 #    filterset_fields = ['brand', 'flag','name', 'price']
     #search_fields = ['name', 'subtitle']
