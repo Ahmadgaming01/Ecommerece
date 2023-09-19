@@ -29,9 +29,16 @@ class CartDetailCreateDeleteAPI(generics.GenericAPIView):
         cart_data.quantity = quantity
         cart_total = round(quantity*product.price , 2)
         cart_data.save()
-        return Response({'status':200 , 'message':'product was added successfuly  '})
+        return Response({'status':200 , 'message':'product was added successfuly ! '})
 
 
-    def get (self , request , *args, **kwargs):
+    def delete (self , request , *args, **kwargs):
         user = User.objects.get(username=self.kwargs['username'])
+        cart = Cart.objects.get(user=user , completed = False)
+        product = Product.objects.get (id=request.data['product_id'])
+
+
+        cart_datail = CartDetail.objects.get (cart = cart , product = product)
+        cart_datail.delete ()
+        return Response ({'status':200 , 'message':'product was deleted successfuly !'})
 
