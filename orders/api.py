@@ -2,7 +2,7 @@
 from rest_framework.response import Response
 from rest_framework import generics
 from .models import CartDetail , Cart , Order , OrderDetail
-from .serializers import CartDetailSerializer , CartSerializer 
+from .serializers import CartDetailSerializer , CartSerializer , OrderDetailserializer , OrderSerializer 
 from django.contrib.auth.models import User
 from products.models import Product
 
@@ -43,9 +43,19 @@ class CartDetailCreateDeleteAPI(generics.GenericAPIView):
         return Response ({'status':200 , 'message':'product was deleted successfuly !'})
 
 class OrderListAPI (generics.ListAPIView):
-    pass
+    serializer_class = OrderSerializer
+
+    def list (self , *args, **kwargs):
+        user = User.objects.get (username=self.kwargs['username'])
+        queryset = self.get_queryset ().filter(user=user)
+        data = OrderSerializer(queryset , many = True).data
+        return Response ({'order':data})
+
+
 
 class OrderDetailAPI (generics.RetrieveAPIView):
-    pass
+    serializer_class = OrderDetailserializer
+    queryset = Order.objects.all()
+
 class CreateOrder (generics.GenericAPIView):
     pass 
