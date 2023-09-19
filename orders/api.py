@@ -42,3 +42,10 @@ class CartDetailCreateDeleteAPI(generics.GenericAPIView):
         cart_datail.delete ()
         return Response ({'status':200 , 'message':'product was deleted successfuly !'})
 
+class OrderListAPI (generics.ListAPIView):
+    pass
+
+class OrderDetailAPI (generics.RetrieveAPIView):
+    pass
+class CreateOrder (generics.GenericAPIView):
+    pass 
