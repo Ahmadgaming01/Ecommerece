@@ -1,4 +1,4 @@
- from rest_framework import serializers
+from rest_framework import serializers
 from .models import Product , Brand
 from django.db.models.aggregates import Avg
 
