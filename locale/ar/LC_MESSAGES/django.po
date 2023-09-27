@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-27 00:54+0200\n"
+"POT-Creation-Date: 2023-09-27 22:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
 #: .\products\models.py:20 .\products\models.py:50
 msgid "name"
 msgstr ""
@@ -69,3 +70,21 @@ msgstr "التعليقات"
 #: .\products\models.py:65
 msgid "rate"
 msgstr "التقييم"
+
+#: .\templates\base.html:183
+msgid "Home"
+msgstr "الصفحة الرئيسية"
+
+#: .\templates\base.html:187
+msgid "shop"
+msgstr "التسوق"
+
+#: .\templates\base.html:191
+#, fuzzy
+#| msgid "Brand"
+msgid "Brands"
+msgstr "الفئة"
+
+#: .\templates\base.html:196
+msgid "Orders"
+msgstr "الطلبات"
