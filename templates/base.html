@@ -1,7 +1,8 @@
 {% load static %}
 {% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" {% if LANGUAGE_CODE == "ar" %} dir="rtl" {% endif %} >
 
 <head>
     <!--=====================================
@@ -32,22 +33,27 @@
                     CSS LINK PART START
         =======================================-->
     <!-- FAVICON -->
+    {% if LANGUAGE_CODE == "ar" %}
     <link rel="icon" href="images/favicon.png">
-
-    <!-- FONTS -->
+    <link rel="stylesheet" href="{% static 'rtl/fonts/flaticon/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/fonts/icofont/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/fonts/fontawesome/fontawesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/vendor/venobox/venobox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/vendor/slickslider/slick.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/vendor/niceselect/nice-select.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/vendor/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rtl/css/main.css' %}">
+    {% else %}
+    <link rel="icon" href="images/favicon.png">
     <link rel="stylesheet" href="{% static 'ltr/fonts/flaticon/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'ltr/fonts/icofont/icofont.min.css' %}">
     <link rel="stylesheet" href="{% static 'ltr/fonts/fontawesome/fontawesome.min.css' %}">
-
-    <!-- VENDOR -->
     <link rel="stylesheet" href="{% static 'ltr/vendor/venobox/venobox.min.css' %}">
     <link rel="stylesheet" href="{% static 'ltr/vendor/slickslider/slick.min.css' %}">
     <link rel="stylesheet" href="{% static 'ltr/vendor/niceselect/nice-select.min.css' %}">
     <link rel="stylesheet" href="{% static 'ltr/vendor/bootstrap/bootstrap.min.css' %}">
-
-    <!-- CUSTOM -->
     <link rel="stylesheet" href="{% static 'ltr/css/main.css' %}">
-
+    {% endif %}
     {% block css %}
     <link rel="stylesheet" href="{% static 'ltr/css/index.css' %}">
     {% endblock css %}
@@ -901,7 +907,21 @@
     <!--=====================================
                     JS LINK PART START
         =======================================-->
-    <!-- VENDOR -->
+    {% if LANGUAGE_CODE == "ar" %}
+    <script src="{% static 'rtl/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'rtl/vendor/bootstrap/popper.min.js' %}"></script>
+    <script src="{% static 'rtl/vendor/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'rtl/vendor/countdown/countdown.min.js' %}"></script>
+    <script src="{% static 'rtl/vendor/niceselect/nice-select.min.js' %}"></script>
+    <script src="{% static 'rtl/vendor/slickslider/slick.min.js' %}"></script>
+    <script src="{% static 'rtl/vendor/venobox/venobox.min.js' %}"></script>
+    <script src="{% static 'rtl/js/nice-select.js' %}"></script>
+    <script src="{% static 'rtl/js/countdown.js' %}"></script>
+    <script src="{% static 'rtl/js/accordion.js' %}"></script>
+    <script src="{% static 'rtl/js/venobox.js' %}"></script>
+    <script src="{% static 'rtl/js/slick.js' %}"></script>
+    <script src="{% static 'rtl/js/main.js' %}"></script>
+    {% else %}
     <script src="{% static 'ltr/vendor/bootstrap/jquery-1.12.4.min.js' %}"></script>
     <script src="{% static 'ltr/vendor/bootstrap/popper.min.js' %}"></script>
     <script src="{% static 'ltr/vendor/bootstrap/bootstrap.min.js' %}"></script>
@@ -909,14 +929,14 @@
     <script src="{% static 'ltr/vendor/niceselect/nice-select.min.js' %}"></script>
     <script src="{% static 'ltr/vendor/slickslider/slick.min.js' %}"></script>
     <script src="{% static 'ltr/vendor/venobox/venobox.min.js' %}"></script>
-
-    <!-- CUSTOM -->
     <script src="{% static 'ltr/js/nice-select.js' %}"></script>
     <script src="{% static 'ltr/js/countdown.js' %}"></script>
     <script src="{% static 'ltr/js/accordion.js' %}"></script>
     <script src="{% static 'ltr/js/venobox.js' %}"></script>
     <script src="{% static 'ltr/js/slick.js' %}"></script>
     <script src="{% static 'ltr/js/main.js' %}"></script>
+
+    {% endif %}
     <!--=====================================
                     JS LINK PART END
         =======================================-->
