@@ -27,7 +27,7 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
-    path('accounts',include('accounts.urls')),
+    path('accounts/',include('accounts.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
     path('admin/', admin.site.urls),
     path('products/', include('products.urls',namespace='products') ),
