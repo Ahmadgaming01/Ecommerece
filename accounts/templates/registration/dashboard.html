@@ -27,13 +27,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-        
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li>
+
         </ul>
 
       </div>
@@ -70,7 +64,13 @@
         datasets: [{
           label: '# of Votes',
           data: [{{products}}, {{brands}}, {{users}}, {{orders}}, {{reviews}}],
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: ['	rgba(250, 100, 20, 0.5)',
+          '	rgba(250, 100, 20, 0.5)',
+          '	rgba(250, 100, 20, 0.5)',
+          '	rgba(250, 100, 20, 0.5)',
+          ]
+
         }]
       },
       options: {
@@ -93,7 +93,13 @@
         datasets: [{
           label: '# of Votes',
           data: [{{recieved}}, {{processed}}, {{shipped}} , {{delivered}}],
-          borderWidth: 1
+          borderWidth: 1,
+          
+          backgroundColor: ['	rgba(250, 100, 20, 0.5)',
+                            '	rgba(250, 100, 20, 0.5)',
+                            '	rgba(250, 100, 20, 0.5)',
+                            '	rgba(250, 100, 20, 0.5)',
+                            ]
         }]
       },
       options: {
@@ -116,7 +122,12 @@
         datasets: [{
           label: '# of Votes',
           data: [{{new_products}}, {{sale_products}}, {{feature_products}}],
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: ['	rgba(250, 100, 20, 0.5)',
+          '	rgba(250, 100, 20, 0.5)',
+          '	rgba(200, 110, 20, 0.5)',
+          '	rgba(220, 150, 20, 0.5)',
+          ]
         }]
       },
       options: {
