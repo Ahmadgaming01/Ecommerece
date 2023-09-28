@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     #translation
 
     'rosetta',
+    'tof',
+    'translated_fields',
 
     
 

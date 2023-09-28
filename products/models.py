@@ -1,5 +1,3 @@
-
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -17,6 +15,7 @@ FLAG_TYPES = [
 ]
 
 class Product(models.Model):
+        
     name = models.CharField (_('name'),max_length=120)
     description = models.TextField (_('description'),max_length=30000)
     price = models.FloatField (_('price'))
@@ -28,8 +27,7 @@ class Product(models.Model):
     tags = TaggableManager()
     slug = models.SlugField (blank=True , null= True)
     video = models.URLField(blank=True , null= True)
-
-
+    
     def __str__(self):
         return self.name
     
