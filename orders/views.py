@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from.models import Order , Cart , CartDetail , Copon
 from products.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
+from settings.models import DeliveryFee
 # Create your views here. 
 
 class OderList( LoginRequiredMixin, ListView):
@@ -16,7 +17,18 @@ class OderList( LoginRequiredMixin, ListView):
 def checkout_page(request):
     cart = Cart.objects.get(user = request.user , completed=False)
     cart_detail = CartDetail.objects.filter(cart=cart)
-    return render (request , 'orders/checkout.html',{'cart_detail':cart_detail})
+    delivery_fee = DeliveryFee.objects.last ()
+
+    sub_total = cart.cart_total()
+    discount = 0
+    total = sub_total + delivery_fee.fee
+
+    return render (request , 'orders/checkout.html',{'cart_detail':cart_detail,
+                                                     'delivery_fee':delivery_fee,
+                                                     'sub_total':sub_total,
+                                                     'total':total,
+                                                     'discount':discount,
+                                                     })
 
 
 def add_to_cart (request):
