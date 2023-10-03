@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'settings',
     "debug_toolbar",
     "orders",
+    "bootstrap5",
 
     #-----api------
     'rest_framework',
