@@ -201,3 +201,6 @@ LANGUAGES = [
     ("en",("English")),
     ("de",("Deutsch")),
 ]
+
+
+AUTHENTICATION_BACKENDS=['accounts.backends.EmailBackend']
