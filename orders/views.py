@@ -1,9 +1,9 @@
 from django.shortcuts import render , redirect
 from django.views.generic import ListView
-from.models import Order , Cart , CartDetail
+from.models import Order , Cart , CartDetail , Copon
 from products.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
-# Create your views here.
+# Create your views here. 
 
 class OderList( LoginRequiredMixin, ListView):
     model = Order
@@ -13,6 +13,11 @@ class OderList( LoginRequiredMixin, ListView):
         queryset = queryset.filter(user=self.request.user)
         return queryset
     
+def checkout_page(request):
+    cart = Cart.objects.get(user = request.user , completed=False)
+    cart_detail = CartDetail.objects.filter(cart=cart)
+    return render (request , 'orders/checkout.html',{'cart_detail':cart_detail})
+
 
 def add_to_cart (request):
     product = Product.objects.get(id=request.POST['product_id'])
