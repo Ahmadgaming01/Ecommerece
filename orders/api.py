@@ -1,10 +1,12 @@
 
 from rest_framework.response import Response
 from rest_framework import generics
-from .models import CartDetail , Cart , Order , OrderDetail
+from .models import CartDetail , Cart , Order , OrderDetail,Coupon
 from .serializers import CartDetailSerializer , CartSerializer , OrderDetailserializer , OrderSerializer 
 from django.contrib.auth.models import User
 from products.models import Product
+from settings.models import DeliveryFee
+import datetime
 
 
 class CartDetailCreateDeleteAPI(generics.GenericAPIView):
@@ -64,7 +66,7 @@ class CreateOrderAPI (generics.GenericAPIView):
         cart = Cart.objects.get(user=user , completed = False)
         cart_detail = CartDetail.objects.filter(cart=cart)
 
-        #---------create oder----------#
+        #---------create order----------#
 
         new_order = Order.objects.create (user=user)
         for object in cart_detail:
@@ -81,3 +83,23 @@ class CreateOrderAPI (generics.GenericAPIView):
 
 
 
+class ApplyCoupon (generics.GenericAPIView):
+    def post (self , request , *args , **kwargs ):
+        user = User.objects.get (username = self.kwargs ['username'])
+        cart = Cart.objects.get(user=user , completed = False)
+        coupon = Coupon.objects.get(code = request.data['coupon_code'])
+        delivery_fee = DeliveryFee.objects.last ()
+        if coupon and coupon.quantity>0:
+            today_date = datetime.datetime.today().date()
+            if today_date >= coupon.start_date and today_date<= coupon.end_date:
+                code_value = cart.cart_total()/100*coupon.percentage
+                sub_total = cart.cart_total()-code_value
+                total = sub_total + delivery_fee.fee
+                cart.coupon = coupon
+                cart.total_with_coupon = sub_total
+                cart.save()
+                return Response({'message':'coupon applied successfuly '})
+            else:
+                return Response({'message':'coupon not found'})
+        else:
+            return Response({'message':'coupon date is not valid '})      
