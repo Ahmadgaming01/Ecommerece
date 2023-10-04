@@ -23,6 +23,9 @@ class Order(models.Model):
     delivery_time = models.DateTimeField(null=True , blank=True)
     delivery_location = models.ForeignKey(Adress , related_name='delivery_address' , on_delete= models.SET_NULL , null=True , blank=True)
     total = models.FloatField()
+    coupon = models.ForeignKey("coupon",  related_name='order_coupon' ,on_delete=models.SET_NULL , null=True , blank=True)
+    total_with_coupon = models.FloatField(blank=True,null=True)
+
     def __str__(self):
         return self.code
 
@@ -38,6 +41,8 @@ class Cart(models.Model):
     
     user = models.ForeignKey(User,related_name='cart_user', on_delete=models.SET_NULL , null=True ,blank=True)
     completed = models.BooleanField(default=False)
+    coupon = models.ForeignKey("coupon", related_name='cart_coupon' ,on_delete=models.SET_NULL , null=True , blank=True)
+    total_with_coupon = models.FloatField(blank=True,null=True)
 
     def cart_total (self):
         total = 0
