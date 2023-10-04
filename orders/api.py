@@ -16,7 +16,7 @@ class CartDetailCreateDeleteAPI(generics.GenericAPIView):
         user = User.objects.get(username=self.kwargs['username'])
         cart , created = Cart.objects.get_or_create (user = user , completed = False)
         data = CartSerializer(cart).data
-        return Response ({'Cart:data' , 'Status:200'})
+        return Response ({'Cart':data , 'Status':200})
     
 
 
