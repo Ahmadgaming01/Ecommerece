@@ -1,9 +1,11 @@
 from django.shortcuts import render ,redirect
 from django.views import generic
 from.models import Product , ProductImages ,Brand ,Review
+from .forms import ReviewForm
 from django.db.models import Q , F , Value , Func
 from django.db.models.aggregates import Count , Avg ,Sum, Min,Max
-
+from django.http import JsonResponse
+from django.template.loader import render_to_string 
 
 def post_list_debug (request):
     #data = Product.objects.filter(price=20)
@@ -57,6 +59,22 @@ class ProductList (generic.ListView):
 
 class ProductDetail (generic.DetailView):
     model = Product
+
+
+def add_review(request,slug):
+    product = Product.objects.get(slug=slug)
+    form = ReviewForm(request.POST)
+    if form.is_valid():
+        myform = form.save(commit=False)
+        myform.product = product
+        myform.user = request.user
+        myform.save()
+
+        review = Review.objects.filter(product=product)
+        html = render_to_string('include/all_reviews.html' , {'review':review , 'request':request} )
+        return JsonResponse ({'result':html})
+        #return redirect(f'/products/{product.slug}')
+
 
 class BrandList(generic.ListView):
     model = Brand

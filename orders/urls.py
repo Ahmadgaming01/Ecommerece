@@ -4,7 +4,7 @@ from .api import CartDetailCreateDeleteAPI , CreateOrderAPI , OrderListAPI , Ord
 app_name = "orders"
 urlpatterns = [
     path('' , OderList.as_view()),
-    path('add-to-cart' , add_to_cart),
+    path('add-to-cart' , add_to_cart , name='add_to_cart'),
     path ('checkout',checkout_page),
 
     #-----api--------#
