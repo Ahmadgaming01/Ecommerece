@@ -60,7 +60,7 @@ class Review (models.Model):
     user = models.ForeignKey(User , verbose_name=_('user') ,related_name='user_review',on_delete=models.SET_NULL , null=True , blank=True)
     product = models.ForeignKey(Product , verbose_name=_('product') , related_name= 'product_review' , on_delete=models.SET_NULL ,null=True , blank= True)
     review = models.TextField (_('review'),max_length=600)
-    rating =models.IntegerField(_('rate') ,validators=[MinValueValidator(0), MaxValueValidator(5)])
+    rate =models.IntegerField(_('rate') ,validators=[MinValueValidator(0), MaxValueValidator(5)])
     date = models.DateTimeField(default= timezone.now)
     def __str__(self):
         return str(self.user)

@@ -70,8 +70,8 @@ def add_review(request,slug):
         myform.user = request.user
         myform.save()
 
-        review = Review.objects.filter(product=product)
-        html = render_to_string('include/all_reviews.html' , {'review':review , 'request':request} )
+        reviews = Review.objects.filter(product=product)
+        html = render_to_string('include/all_reviews.html' , {'reviews':reviews , request:request} )
         return JsonResponse ({'result':html})
         #return redirect(f'/products/{product.slug}')
 

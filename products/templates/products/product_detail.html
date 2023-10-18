@@ -1191,7 +1191,8 @@
                 data: $(this).serialize() ,
                 dataType:'json',
                 success: function (response) {
-                $('all-review').html(response['result'])
+                $('#all-reviews').html(response['result'])
+                $("#reviewForm").trigger('reset');
                 }
 
             })
