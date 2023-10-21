@@ -60,6 +60,12 @@ class ProductList (generic.ListView):
 class ProductDetail (generic.DetailView):
     model = Product
 
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["reviews"] = Review.objects.filter(product=self.get_object())
+        return context
+    
 
 def add_review(request,slug):
     product = Product.objects.get(slug=slug)

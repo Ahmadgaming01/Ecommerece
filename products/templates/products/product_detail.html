@@ -43,12 +43,12 @@
                             </div>
                             <ul class="details-preview"> 
                                 
-                                {% for image in object.product_images.all %}
-                                    <li><img src="{{image.image.url}}" alt="product"></li>
-                                {% endfor %}
+                                
+                                    <li><img src="{{object.image.url}}" alt="product"></li>
+                                
                             </ul>
                             <ul class="details-thumb">
-                                {% for image in object.product_images.all %}
+                                {% for image in object.images_product.all %}
                                     <li><img src="{{image.image.url}}" alt="product"></li>
                                 {% endfor %}
                             </ul>
@@ -91,7 +91,7 @@
                                 </ul>
                             </div>
                             <div class="details-add-group row">
-                                <form id="add-to-cart-form" action="{% url 'orders:add_to_cart' %}" method="post">
+                                <form id="add-to-cart-form" action="{% url 'orders:add_to_cart' %}" id="add-to-cart-form" method="post">
                                     {% csrf_token %}
 
                                     <div class="col-lg-5">
@@ -1193,6 +1193,27 @@
                 success: function (response) {
                 $('#all-reviews').html(response['result'])
                 $("#reviewForm").trigger('reset');
+                }
+
+            })
+        })
+    })
+
+
+// add to cart 
+    $(document).ready(function(e){
+        $(document).on('submit','#add-to-cart-form',function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type:$(this).attr('method'),
+                url: $(this).attr('action') ,
+                data: $(this).serialize() ,
+                dataType:'json',
+                success: function (response) {
+                $('#cart-sidebar').html(response['result'])
+                var smallTag = $("total_price");
+
                 }
 
             })

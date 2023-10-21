@@ -56,17 +56,30 @@ def checkout_page(request):
 
 
 def add_to_cart (request):
+
+    #get data frontend
     product = Product.objects.get(id=request.POST['product_id'])
     quantity = request.POST['quantity']
 
 
-    
+    #get cart
     cart = Cart.objects.get(user = request.user , completed = False)
     
+    # cart detail
+
     cart_detail , created = CartDetail.objects.get_or_create (cart=cart , product=product)
     cart_detail.quantity = quantity
     cart_detail.price = product.price
     cart_detail.total = round (int(quantity) * product.price , 2)
     cart_detail.save()
 
-    return redirect(f'/product/{product.slug}')
+
+    cart = Cart.objects.get(user=request.user , completed=False)
+    detail = CartDetail.objects.get(cart=cart)
+
+    total = f"{cart.cart_total()}#"
+
+    html = render_to_string('include/base_sidebar.html' , {'cart_data':cart , 'cart_detail':detail , request:request})
+    return JsonResponse({'result':html , 'total':total})
+
+    #return redirect(f'/product/{product.slug}')
