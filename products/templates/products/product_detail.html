@@ -45,7 +45,7 @@
                                 
                                 
                                     <li><img src="{{object.image.url}}" alt="product"></li>
-                                
+                                -
                             </ul>
                             <ul class="details-thumb">
                                 {% for image in object.images_product.all %}
@@ -91,7 +91,7 @@
                                 </ul>
                             </div>
                             <div class="details-add-group row">
-                                <form id="add-to-cart-form" action="{% url 'orders:add_to_cart' %}" id="add-to-cart-form" method="post">
+                                <form id="add-to-cart-form" action="{% url 'orders:add_to_cart' %}" method="post">
                                     {% csrf_token %}
 
                                     <div class="col-lg-5">
@@ -1197,11 +1197,10 @@
 
             })
         })
-    })
 
+        
+// add to cart
 
-// add to cart 
-    $(document).ready(function(e){
         $(document).on('submit','#add-to-cart-form',function(e){
             e.preventDefault();
 
@@ -1211,14 +1210,18 @@
                 data: $(this).serialize() ,
                 dataType:'json',
                 success: function (response) {
-                $('#cart-sidebar').html(response['result'])
-                var smallTag = $("total_price");
-
+                    $('#cart-sidebar').html(response['result'])
+                    var smallTag = $('#total_price')
+                    smallTag.text(response('total'))
                 }
 
             })
         })
     })
+
+ 
+
+    
 </script>
 
 <!--=====================================

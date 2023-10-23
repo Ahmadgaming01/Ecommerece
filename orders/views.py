@@ -75,11 +75,11 @@ def add_to_cart (request):
 
 
     cart = Cart.objects.get(user=request.user , completed=False)
-    detail = CartDetail.objects.get(cart=cart)
+    detail = CartDetail.objects.filter(cart=cart)
 
-    total = f"{cart.cart_total()}#"
+    total = f"{cart.cart_total()}$"
 
-    html = render_to_string('include/base_sidebar.html' , {'cart_data':cart , 'cart_detail':detail , request:request})
+    html = render_to_string('include/base_sidebar.html' , {'cart_data':cart , 'cart_detail_data':detail , request:request})
     return JsonResponse({'result':html , 'total':total})
 
     #return redirect(f'/product/{product.slug}')
