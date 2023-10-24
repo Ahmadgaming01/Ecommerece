@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from products.models import Product , Brand , Review
-# Create your views here.
+from django.views.decorators.cache import cache_page
+
+
+
+@cache_page(60 * 24)
 def home (requset):
     brands =Brand.objects.all()
     sale_products = Product.objects.filter(flag = 'Sale')[:10]

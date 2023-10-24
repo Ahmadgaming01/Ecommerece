@@ -6,7 +6,10 @@ from django.db.models import Q , F , Value , Func
 from django.db.models.aggregates import Count , Avg ,Sum, Min,Max
 from django.http import JsonResponse
 from django.template.loader import render_to_string 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
+@cache_page(60 * 1)
 def post_list_debug (request):
     #data = Product.objects.filter(price=20)
     #data = Product.objects.filter(price__gt=80)
@@ -47,12 +50,12 @@ def post_list_debug (request):
     #data = Product.objects.aaggregate(mymin = Min('price') , mycount = Count('id'))
     #data = Product.objects.annotate(is_new = Value(True))
     #data = Product.objects.annotate(is_tax = F('price')*1.2)
-    data = Brand.objects.annotate(posts = Count('Product_Brand'))
+    #data = Brand.objects.annotate(posts = Count('Product_Brand'))
+    data = Product.objects.all()
 
     return render(request , 'products/debug.html',{'data':data})
 
-
-
+@method_decorator(cache_page(60 * 5), name='dispatch')
 class ProductList (generic.ListView):
     model = Product
     paginate_by = 100
