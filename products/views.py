@@ -12,7 +12,7 @@ from .tasks import send_m_email
 
 #@cache_page(60 * 1)
 
-send_m_email.delay()
+
 def post_list_debug (request):
     #data = Product.objects.filter(price=20)
     #data = Product.objects.filter(price__gt=80)
@@ -57,6 +57,8 @@ def post_list_debug (request):
     data = Product.objects.all()
 
     #send email 1m user
+    
+    send_m_email.delay()
 
     return render(request , 'products/debug.html',{'data':data})
 
