@@ -4,7 +4,7 @@ FROM python:3.11.6-slim-bullseye
 
 ENV PYTHONUNPUFFERED = 1
 
-#isntall nedded libraries
+#isntall nedded li  braries
 
 RUN apt-get update && apt-get -y install libpq-dev gcc
 

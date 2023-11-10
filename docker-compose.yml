@@ -9,3 +9,8 @@ services:
     ports:
       - "8000:8000"
     container_name: djangosercer
+  
+  redis:
+    image: redis:7.2.3-alpine3.18
+    container_name: redisServer
+
