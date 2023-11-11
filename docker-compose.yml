@@ -16,3 +16,17 @@ services:
     image: redis:7.2.3-alpine3.18
     container_name: redisServer
 
+  celery:
+    image: celery:alpine
+    container_name: celeryServer
+    build:
+      context: .
+    depends_on:
+      - redis
+      - djserver
+    volumes:
+      - .:/app
+    command: celery -A project worker --loglevel=info
+    environment:
+      CELERY_BROCKER_URL : redis://redis:6379/0
+      CELERY_RESULT_BACKEND : redis://redis:6379/0
