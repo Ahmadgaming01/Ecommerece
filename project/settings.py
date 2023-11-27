@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'accounts',
+    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -64,7 +65,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': [
-        #'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -147,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'ar'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'UTC'
 
@@ -201,6 +202,7 @@ LANGUAGES = [
     ("en",("English")),
     ("de",("Deutsch")),
 ]
+MODELTRANSLATION_LANGUAGES = ('en', 'de')
 
 
 AUTHENTICATION_BACKENDS=['accounts.backends.EmailBackend']
@@ -220,10 +222,11 @@ CACHES = {
     }
 }
 
-#CELERY_BROCKER_URL = "redis://localhost:6379/0"
-#CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
-CELERY_BROCKER_URL = "redis://redis:6379/0"
-CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+
+CELERY_BROCKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+#CELERY_BROCKER_URL = "redis://redis:6379/0"
+#CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'

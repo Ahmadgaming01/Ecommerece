@@ -9,6 +9,7 @@ from rest_framework import filters
 from .filters import ProductFilter
 from .pagination import MyPagination
 from rest_framework.permissions import IsAuthenticated
+from django.utils import translation
 
 #@api_view(['GET'])
 #def product_list_api (request):
@@ -30,12 +31,18 @@ class ProductListApi(generics.ListAPIView):
     filterset_class = ProductFilter
     ordering_fields = ['price','flag']
     pagination_class = MyPagination
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
 #    filter_backends = [filters.SearchFilter]
 #    filterset_fields = ['brand', 'flag','name', 'price']
     #search_fields = ['name', 'subtitle']
     #filter_backends = [filters.OrderingFilter]
     #ordering_fields = ['price', 'flag']
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        if 'HTTP_ACCEPT_LANGUAGE' in self.request.META:
+            lang = self.request.META['HTTP_ACCEPT_LANGUAGE']
+            translation.activate(lang)
+            return queryset
     
     
 class ProductDetailApi(generics.RetrieveAPIView):

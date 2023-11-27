@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product , Brand
+from .models import Product , Brand,Review
 from django.db.models.aggregates import Avg
 
 class ProductSerializer (serializers.ModelSerializer):
@@ -15,7 +15,7 @@ class ProductSerializer (serializers.ModelSerializer):
         return reviews
     
     def get_avg_rate (self , object):
-        avg = object.product_review.aggregate(avg = Avg ('rating'))
+        avg = object.product_review.aggregate(avg = Avg ('rate'))
 #        if not avg['avg'] :
 #            result = 0
 #        else:
