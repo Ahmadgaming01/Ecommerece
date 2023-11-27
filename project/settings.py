@@ -117,11 +117,24 @@ INTERNAL_IPS = [
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+'''
+
+# postgres db settings 
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "amazon",
+        "USER": "postgres",
+        "PASSWORD":"postgres",
+        "HOST":"db",
+        "PORT":"5432",
     }
 }
 
@@ -223,10 +236,10 @@ CACHES = {
 }
 
 
-CELERY_BROCKER_URL = "redis://localhost:6379/0"
-CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
-#CELERY_BROCKER_URL = "redis://redis:6379/0"
-#CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+#CELERY_BROCKER_URL = "redis://localhost:6379/0"
+#CELERY_RESULT_BACKEND = "redis://localhost:6379/0"
+CELERY_BROCKER_URL = "redis://redis:6379/0"
+CELERY_RESULT_BACKEND = "redis://redis:6379/0"
 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'

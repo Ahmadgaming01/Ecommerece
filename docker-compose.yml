@@ -10,6 +10,7 @@ services:
       - "8000:8000"
     depends_on:
       - redis
+      - db
     container_name: djangosercer
   
   redis:
@@ -30,3 +31,15 @@ services:
     environment:
       CELERY_BROCKER_URL : redis://redis:6379/0
       CELERY_RESULT_BACKEND : redis://redis:6379/0
+
+
+  db:
+    image: postgres:latest
+    enviroment:
+      POSTGRES_USER: Postgres
+      POSTGRES_PASSWORD: Postgres
+      POSTGRES_DB: amazon
+      volumes:
+        - postgres_data:/var/lib/postgressql/data
+  volumes:
+    postgres_data:
