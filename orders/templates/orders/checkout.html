@@ -86,6 +86,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="checkout-proced">
+                            <button onclick="buy(event)" type="button" class="btn btn-inline">Pay</button>
+                        </div>
                     </div>
                     <div class="col-lg-12">
                         <div class="account-card">
@@ -326,6 +329,10 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script>
         
+            function buy (event){
+                event.preventDefault();
+            }
+
             //ReviewForm
             $(document).ready(function(e){
                 $(document).on('submit','#couponForm',function(e){

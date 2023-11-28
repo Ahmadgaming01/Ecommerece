@@ -83,3 +83,15 @@ def add_to_cart (request):
     return JsonResponse({'result':html , 'total':total})
 
     #return redirect(f'/product/{product.slug}')
+
+
+# create product on stripe
+
+def process_payment(request):              #with ajax
+    pass
+
+def payment_success(request):
+    return render(request , 'orders/success.html' , {})
+
+def payment_failed(request):
+    return render(request , 'orders/failed.html' , {})
