@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="checkout-proced">
-                            <button onclick="buy(event)" type="button" class="btn btn-inline">Pay</button>
+                            <button onclick="buy(event)" type="button" class="btn btn-inline"> Pay </button>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -326,25 +326,26 @@
                     MODAL EDIT FORM END
         =======================================-->
 
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script>
-        <script src="https://js.stripe.com/v3/"></script>
+        
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://js.stripe.com/v3/"></script>    
+    <script>
         
             function buy (event){
                 event.preventDefault()
-                var stripe = stripe('{{pub_key}}')
+                var stripe = Stripe('{{pub_key}}')
 
-                fetch('orders/checkout/payment',{
+                fetch('checkout/payment',{
                     method: 'POST',
                     headers:{
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{csrf_token}}'
-                    }
+                        'X-CSRFToken': '{{csrf_token}}'
+                    },
                 }).then(function(response){
                     return response.json();
                 }).then(function(session){
-                    stripe.redirectToCheckout({
-                        sessionId: session.id
+                    return stripe.redirectToCheckout({
+                        "sessionId": session.session.id
                     })
                 })
 
