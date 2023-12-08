@@ -331,7 +331,24 @@
         <script src="https://js.stripe.com/v3/"></script>
         
             function buy (event){
-                event.preventDefault();
+                event.preventDefault()
+                var stripe = stripe('{{pub_key}}')
+
+                fetch('orders/checkout/payment',{
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{csrf_token}}'
+                    }
+                }).then(function(response){
+                    return response.json();
+                }).then(function(session){
+                    stripe.redirectToCheckout({
+                        sessionId: session.id
+                    })
+                })
+
+
             }
 
             //ReviewForm

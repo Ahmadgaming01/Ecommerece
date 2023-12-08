@@ -39,7 +39,7 @@ class OrderDetail(models.Model):
 
 class Cart(models.Model):
     
-    user = models.ForeignKey(User,related_name='cart_user', on_delete=models.SET_NULL , null=True ,blank=True)
+    user = models.ForeignKey(User,related_name='cart_user', on_delete=models.SET_NULL , null=True ,blank=True , default=1)
     completed = models.BooleanField(default=False)
     coupon = models.ForeignKey("coupon", related_name='cart_coupon' ,on_delete=models.SET_NULL , null=True , blank=True)
     total_with_coupon = models.FloatField(blank=True,null=True)

@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.template.loader import render_to_string 
 from django.conf import settings
 import stripe
+from utils.generate_cod import generate_code
 # Create your views here. 
 
 class OderList( LoginRequiredMixin, ListView):
@@ -56,6 +57,7 @@ def checkout_page(request):
                                                      'sub_total':round(sub_total,2),
                                                      'total':round(total,2),
                                                      'discount':discount,
+                                                     "pub_key":pub_key
                                                      })
 
 
@@ -89,21 +91,44 @@ def add_to_cart (request):
     #return redirect(f'/product/{product.slug}')
 
 
-# create product on stripe
+# create product on stripe #with ajax
 
-def process_payment(request):              #with ajax
+def process_payment(request):
+    cart = Cart.objects.get(user = request.user , completed=False)
+    cart_detail = CartDetail.objects.filter(cart=cart)
+    delivery_fee = DeliveryFee.objects.last ().fee
+    if cart.total_with_coupon:
+        total = cart.total_with_coupon + delivery_fee
+    else:
+        cart.cart_total + delivery_fee
+
+
+    code = generate_code()
+
+
+    stripe.api_key = settings.STRIPE_API_KEY_SECRET
+
     checkout_session = stripe.checkout.Session.create(
         line_items=[
             {
-                # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                'price': '{{PRICE_ID}}',
-                'quantity': 1,
+                'price_data':{
+                    'currency':'usd',
+                    'product_data' :{
+                        'name':code
+                    },
+                    'unit_amount': int (total*100 )
+                    
+                },
+                'quantity':1
+                
+
             },
         ],
         mode='payment',
         success_url='http://127.0.0.1:8000/orders/checkout/payment/success',
         cancel_url='http://127.0.0.1:8000/orders/checkout/payment/failed',
     )
+    return JsonResponse({'session':checkout_session})
 
 def payment_success(request):
     return render(request , 'orders/success.html' , {})
