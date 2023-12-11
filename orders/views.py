@@ -116,11 +116,11 @@ def add_to_cart (request):
 def process_payment(request):
     cart = Cart.objects.get(user = request.user , completed=False)
     cart_detail = CartDetail.objects.filter(cart=cart)
-    delivery_fee = DeliveryFee.objects.last ().fee
+    delivery_fee = DeliveryFee.objects.last().fee
     if cart.total_with_coupon:
         total = cart.total_with_coupon + delivery_fee
     else:
-        cart.cart_total + delivery_fee
+        total = cart.cart_total() + delivery_fee
 
 
     code = generate_code()
@@ -175,7 +175,7 @@ def payment_success(request):
         
     
     return render(request , 'orders/success.html' , {
-        "code":generate_code 
+        "code":generated_code 
     })
 
 def payment_failed(request):
