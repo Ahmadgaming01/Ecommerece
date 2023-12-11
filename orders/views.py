@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.views.generic import ListView
-from.models import Order , Cart , CartDetail , Coupon
+from.models import Order , Cart , CartDetail , Coupon , OrderDetail
 from products.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
 from settings.models import DeliveryFee
@@ -10,6 +10,11 @@ from django.template.loader import render_to_string
 from django.conf import settings
 import stripe
 from utils.generate_cod import generate_code
+
+#for paymnet (user browser session)
+from django.contrib.sessions.models import Session
+from django.contrib.sessions.backends.db import SessionStore
+
 # Create your views here. 
 
 class OderList( LoginRequiredMixin, ListView):
@@ -87,8 +92,23 @@ def add_to_cart (request):
 
     html = render_to_string('include/base_sidebar.html' , {'cart_data':cart , 'cart_detail_data':detail , request:request})
     return JsonResponse({'result':html , 'total':total})
+#return redirect(f'/product/{product.slug}')
 
-    #return redirect(f'/product/{product.slug}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # create product on stripe #with ajax
@@ -104,7 +124,9 @@ def process_payment(request):
 
 
     code = generate_code()
-
+    # Save the generated code to the session
+    request.session['generated_code'] = code
+    request.session.save()
 
     stripe.api_key = settings.STRIPE_API_KEY_SECRET
 
@@ -131,7 +153,30 @@ def process_payment(request):
     return JsonResponse({'session':checkout_session})
 
 def payment_success(request):
-    return render(request , 'orders/success.html' , {})
+    cart = Cart.objects.get(user = request.user , completed = False)
+    cart_detail = CartDetail.objects.filter(cart=cart)
+
+    generated_code = request.session.get('generated_code')
+
+        #---------create order----------#
+
+    new_order = Order.objects.create (user = request.user , code = generated_code )
+    for object in cart_detail:
+        OrderDetail.objects.create(
+            order=new_order,
+            product = object.product,
+            price = object.price,
+            quantity = object.quantity,
+            total = object.total,)
+        
+
+        cart.completed=True
+        cart.save ()
+        
+    
+    return render(request , 'orders/success.html' , {
+        "code":generate_code 
+    })
 
 def payment_failed(request):
     return render(request , 'orders/failed.html' , {})
